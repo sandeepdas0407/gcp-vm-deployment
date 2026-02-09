@@ -7,6 +7,11 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "claude-demo-486915-tfstate"
+    prefix = "terraform/state"
+  }
 }
 
 provider "google" {

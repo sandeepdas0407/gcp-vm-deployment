@@ -36,10 +36,23 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Enable required GCP APIs
-        run: gcloud services enable compute.googleapis.com cloudresourcemanager.googleapis.com --quiet --project=claude-demo-486915
+        run: gcloud services enable compute.googleapis.com cloudresourcemanager.googleapis.com storage.googleapis.com --quiet --project=claude-demo-486915
+
+      - name: Create state bucket if not exists
+        run: gcloud storage buckets describe gs://claude-demo-486915-tfstate --project=claude-demo-486915 2>/dev/null || gcloud storage buckets create gs://claude-demo-486915-tfstate --project=claude-demo-486915 --location=us-central1 --uniform-bucket-level-access
 
       - name: Terraform Init
         run: terraform init
+
+      - name: Import existing resources if state is empty
+        run: |
+          if ! terraform state list 2>/dev/null | grep -q .; then
+            terraform import google_compute_network.vpc projects/claude-demo-486915/global/networks/demo-vm-vpc || true
+            terraform import google_compute_subnetwork.subnet projects/claude-demo-486915/regions/us-central1/subnetworks/demo-vm-subnet || true
+            terraform import google_compute_firewall.allow_ingress projects/claude-demo-486915/global/firewalls/demo-vm-allow-ingress || true
+            terraform import google_compute_address.static_ip projects/claude-demo-486915/regions/us-central1/addresses/demo-vm-ip || true
+            terraform import google_compute_instance.vm projects/claude-demo-486915/zones/us-central1-a/instances/demo-vm || true
+          fi
 
       - name: Terraform Plan
         run: terraform plan -no-color -out=tfplan
