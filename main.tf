@@ -1,5 +1,13 @@
+# Enable Compute Engine API
+resource "google_project_service" "compute" {
+  project            = var.project_id
+  service            = "compute.googleapis.com"
+  disable_on_destroy = false
+}
+
 # VPC Network
 resource "google_compute_network" "vpc" {
+  depends_on = [google_project_service.compute]
   name                    = "${var.vm_name}-vpc"
   auto_create_subnetworks = false
 }
