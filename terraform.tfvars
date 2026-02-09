@@ -3,3 +3,4 @@ region       = "us-central1"
 zone         = "us-central1-a"
 vm_name      = "demo-vm"
 machine_type = "e2-micro"
+network_tags = ["http-server", "ssh"]
