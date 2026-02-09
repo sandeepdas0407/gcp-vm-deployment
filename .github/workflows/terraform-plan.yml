@@ -33,6 +33,14 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Enable required GCP APIs
+        run: |
+          gcloud services enable compute.googleapis.com --project=claude-demo-486915
+          gcloud services enable cloudresourcemanager.googleapis.com --project=claude-demo-486915
+
       - name: Terraform Init
         run: terraform init
 
