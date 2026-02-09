@@ -1,0 +1,24 @@
+output "vm_name" {
+  description = "Name of the VM instance"
+  value       = google_compute_instance.vm.name
+}
+
+output "vm_external_ip" {
+  description = "External IP address of the VM"
+  value       = google_compute_address.static_ip.address
+}
+
+output "vm_internal_ip" {
+  description = "Internal IP address of the VM"
+  value       = google_compute_instance.vm.network_interface[0].network_ip
+}
+
+output "vm_self_link" {
+  description = "Self-link of the VM instance"
+  value       = google_compute_instance.vm.self_link
+}
+
+output "vpc_network" {
+  description = "VPC network name"
+  value       = google_compute_network.vpc.name
+}

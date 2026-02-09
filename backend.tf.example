@@ -1,0 +1,9 @@
+# Uncomment and configure this to use a GCS backend for remote state.
+# First create the bucket: gsutil mb -p claude-demo-486915 gs://claude-demo-486915-tfstate
+#
+# terraform {
+#   backend "gcs" {
+#     bucket = "claude-demo-486915-tfstate"
+#     prefix = "terraform/state"
+#   }
+# }
