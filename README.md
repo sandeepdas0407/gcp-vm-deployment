@@ -29,30 +29,16 @@ terraform destroy
 
 ## CI/CD Setup (GitHub Actions)
 
-The workflows use [Workload Identity Federation](https://cloud.google.com/iam/docs/workload-identity-federation) for keyless authentication.
+Uses a service account key JSON stored as a GitHub secret.
 
 ### Required GitHub Secrets
 
 | Secret | Description |
 |--------|-------------|
-| `WIF_PROVIDER` | Workload Identity Provider resource name |
-| `GCP_SERVICE_ACCOUNT` | Service account email for Terraform |
+| `GCP_SA_KEY` | Service account JSON key with Compute Engine permissions |
 
 ### Workflows
 
 - **terraform-plan.yml** - Runs `plan` on PRs, posts output as a comment
 - **terraform-apply.yml** - Runs `apply` on push to `main`
 - **terraform-destroy.yml** - Manual workflow to tear down infrastructure
-
-## Project Structure
-
-```
-.
-├── .github/workflows/   # CI/CD pipelines
-├── main.tf              # VM, VPC, firewall resources
-├── variables.tf         # Input variable definitions
-├── outputs.tf           # Output values
-├── provider.tf          # Provider and version config
-├── terraform.tfvars     # Variable values
-└── backend.tf.example   # Remote state backend template
-```

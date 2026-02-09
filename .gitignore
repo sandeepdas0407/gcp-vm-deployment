@@ -1,21 +1,17 @@
 # Terraform
 *.tfstate
 *.tfstate.*
-*.tfstate.backup
 .terraform/
 .terraform.lock.hcl
 tfplan
 crash.log
-override.tf
-override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Secrets - NEVER commit these
+# Secrets
 *.pem
 *.key
 credentials.json
-*.json.enc
 
 # OS
 .DS_Store

@@ -1,6 +1,1 @@
-project_id   = "claude-demo-486915"
-region       = "us-central1"
-zone         = "us-central1-a"
-vm_name      = "demo-vm"
-machine_type = "e2-micro"
-network_tags = ["http-server", "ssh"]
+project_id = "claude-demo-486915"
