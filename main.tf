@@ -23,6 +23,31 @@ resource "google_compute_firewall" "allow_ingress" {
   target_tags   = var.network_tags
 }
 
+# Import and remove orphan firewall rules left from pre-merge config
+import {
+  to = google_compute_firewall.allow_ssh_legacy
+  id = "projects/claude-demo-486915/global/firewalls/demo-vm-allow-ssh"
+}
+
+import {
+  to = google_compute_firewall.allow_http_legacy
+  id = "projects/claude-demo-486915/global/firewalls/demo-vm-allow-http"
+}
+
+removed {
+  from = google_compute_firewall.allow_ssh_legacy
+  lifecycle {
+    destroy = true
+  }
+}
+
+removed {
+  from = google_compute_firewall.allow_http_legacy
+  lifecycle {
+    destroy = true
+  }
+}
+
 resource "google_compute_address" "static_ip" {
   name   = "${var.vm_name}-ip"
   region = var.region

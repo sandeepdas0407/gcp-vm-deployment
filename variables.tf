@@ -24,7 +24,7 @@ variable "vm_name" {
 variable "machine_type" {
   description = "GCP machine type for the VM"
   type        = string
-  default     = "e2-micro"
+  default     = "n1-standard-1"
 }
 
 variable "network_tags" {
